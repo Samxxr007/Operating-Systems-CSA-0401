@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <dirent.h>
+
+int main() {
+    DIR *d;
+    struct dirent *dir;
+
+    // Open current directory
+    d = opendir(".");
+
+    if (d == NULL) {
+        perror("Unable to open directory");
+        return 1;
+    }
+
+    printf("Listing files in the current directory:\n");
+
+    // Read entries from directory
+    while ((dir = readdir(d)) != NULL) {
+        // Skip . and ..
+        if (dir->d_name[0] != '.') {
+            printf("%s\n", dir->d_name);
+        }
+    }
+
+    closedir(d);
+    return 0;
+}
